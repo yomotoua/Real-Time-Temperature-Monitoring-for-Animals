@@ -3,11 +3,12 @@ from .models import TemperatureReading, Animal
 
 class TemperatureReadingSerializer(serializers.ModelSerializer):
     animal_name = serializers.CharField(write_only=True)
+    animal = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = TemperatureReading
-        fields = ['id', 'animal_name', 'temperature', 'created_at']
-        read_only_fields = ['id', 'created_at']
+        fields = ['id', 'animal', 'animal_name', 'temperature', 'created_at']
+        read_only_fields = ['id', 'created_at', 'animal']
 
     def create(self, validated_data):
         animal_name = validated_data.pop('animal_name')

@@ -19,3 +19,10 @@ class AlertListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return TemperatureReading.objects.filter(Q(temperature__gt=39) | Q(temperature__lt=36))
+
+class TemperatureReadingListAPIView(generics.ListAPIView):
+    """
+    GET: List all temperature readings.
+    """
+    queryset = TemperatureReading.objects.all()
+    serializer_class = TemperatureReadingSerializer
