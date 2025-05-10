@@ -16,6 +16,11 @@ class TemperatureReadingSerializer(serializers.ModelSerializer):
         reading = TemperatureReading.objects.create(animal=animal, **validated_data)
         return reading
 
+class AnimalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Animal
+        fields = ['id', 'name']
+
 class AlertSerializer(serializers.ModelSerializer):
     animal = serializers.StringRelatedField()
 
