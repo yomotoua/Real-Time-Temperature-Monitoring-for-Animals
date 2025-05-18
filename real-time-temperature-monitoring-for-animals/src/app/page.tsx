@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import TemperatureDashboard from "../components/TemperatureDashboard";
+import TemperatureDashboard from "../components/TemperatureDashboard.jsx";
 
 export default function Home() {
   return (
