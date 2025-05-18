@@ -3,12 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation"; // Import useParams from next/navigation
 import TemperatureChart from "../../components/TemperatureChart";
 
-
-// Define Alert type
 type Alert = { animal: string; temperature: number };
 
 export default function TemperatureDashboard() {
-  // Use useParams to extract the animalId
   const params = useParams<{ animalId: string }>(); // Explicitly specify animalId type
   const animalId = params?.animalId; // Safely access animalId
 
@@ -20,7 +17,7 @@ export default function TemperatureDashboard() {
 
     async function fetchData() {
       // Fetch temperature data for this animal from the backend API
-     const res = await fetch(`/api/temperatures/${animalId}`);
+     const res = await fetch(`http://127.0.0.1:8000/api/temperatures/${animalId}`);
       const data = await res.json();
 
       // Ensure data is an array, and set the temperature data
@@ -38,7 +35,6 @@ export default function TemperatureDashboard() {
   }, [animalId]);
 
   useEffect(() => {
-    // Fetch alerts for out-of-range temperatures
     const alertRes = fetch("/api/alerts");
     alertRes
       .then((response) => response.json())
