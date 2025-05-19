@@ -52,7 +52,7 @@ Open your browser and go to:
 
 ---
 
-## 🖼️ Demo Previews
+## Demo Previews
 
 Here’s how the app looks in action:
 
