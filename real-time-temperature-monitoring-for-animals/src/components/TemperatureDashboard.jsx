@@ -72,7 +72,7 @@ export default function TemperatureDashboard() {
             setLatestAlertId(newAlertId);
             setVisibleAlert({
               id: newAlertId,
-              message: `⚠️ Alert: ${newestAlert.animal} at ${newestAlert.created_at} → ${newestAlert.temperature}°C`
+              message: ` Alert: ${newestAlert.animal} at ${newestAlert.created_at} → ${newestAlert.temperature}°C`
             });
 
             setTimeout(() => setVisibleAlert(null), 3000);
@@ -90,7 +90,7 @@ export default function TemperatureDashboard() {
   }, [animals, latestAlertId]);
 
   return (
-    <div className="font-sans p-5 pb-10 bg-gray-800 text-white rounded-lg shadow-lg">
+<div className="font-sans p-5 pt-20 pb-10 bg-gray-800 text-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Animal Temperature Dashboard</h1>
 
       {visibleAlert && (

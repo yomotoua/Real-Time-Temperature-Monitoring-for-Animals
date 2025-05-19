@@ -65,5 +65,19 @@ class TemperatureReadingListAPIView(ListAPIView):
 
         return TemperatureReading.objects.filter(filters)
 
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView
+from .models import TemperatureReading, Animal
+from .serializers import TemperatureReadingSerializer
+from django.shortcuts import get_object_or_404
+
+class TemperatureByAnimalAPIView(ListAPIView):
+    serializer_class = TemperatureReadingSerializer
+
+    def get_queryset(self):
+        animal_name = self.kwargs["animal_name"]
+        animal = get_object_or_404(Animal, name__iexact=animal_name)
+        return TemperatureReading.objects.filter(animal=animal).order_by("created_at")
 
 

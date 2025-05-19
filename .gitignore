@@ -1,0 +1,15 @@
+# Python
+*.pyc
+__pycache__/
+db.sqlite3
+.env
+venv/
+
+# Node
+node_modules/
+.next/
+.env.local
+package-lock.json
+
+# OS
+.DS_Store

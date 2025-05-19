@@ -1,73 +1,95 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation"; // Import useParams from next/navigation
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import TemperatureChart from "../../components/TemperatureChart";
 
-type Alert = { animal: string; temperature: number };
+type Alert = {
+  animal: string;
+  temperature: number;
+};
 
-export default function TemperatureDashboard() {
-  const params = useParams<{ animalId: string }>(); // Explicitly specify animalId type
-  const animalId = params?.animalId; // Safely access animalId
+export default function AnimalProfilePage() {
+  const router = useRouter();
+  const { animalId } = router.query;
 
-  const [temps, setTemps] = useState<number[]>([]); // State to hold temperature values
-  const [alerts, setAlerts] = useState<Alert[]>([]); // State to hold alerts
+  const [temps, setTemps] = useState<number[]>([]);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
 
+  // Fetch temperature history for this animal
   useEffect(() => {
-    if (!animalId) return; // Ensure animalId exists
+    if (!animalId || typeof animalId !== "string") return;
 
     async function fetchData() {
-      // Fetch temperature data for this animal from the backend API
-     const res = await fetch(`http://127.0.0.1:8000/api/temperatures/${animalId}`);
-      const data = await res.json();
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/api/temperatures/${animalId}`);
+        if (!res.ok) throw new Error("Failed to fetch temperature data");
+        const data = await res.json();
+        const values = data.map((entry: any) => entry.temperature);
+        setTemps(values); 
 
-      // Ensure data is an array, and set the temperature data
-      if (Array.isArray(data)) {
-        setTemps(data.map((r: any) => r.temperature)); // Set the temperature data as an array
-      } else {
-        console.error("Fetched data is not an array:", data);
+      } catch (err) {
+        console.error("Error fetching temperature history:", err);
       }
     }
 
     fetchData();
-
-    const iv = setInterval(fetchData, 2000); // Fetch data every 2 seconds
-    return () => clearInterval(iv); // Cleanup interval on unmount
+    const interval = setInterval(fetchData, 2000);
+    return () => clearInterval(interval);
   }, [animalId]);
 
+  // Fetch alerts (and filter for this animal)
   useEffect(() => {
-    const alertRes = fetch("/api/alerts");
-    alertRes
-      .then((response) => response.json())
-      .then((alertData) => setAlerts(alertData));
+    async function fetchAlerts() {
+      try {
+        const res = await fetch("/api/alerts");
+        const data = await res.json();
+        setAlerts(data);
+      } catch (err) {
+        console.error("Error fetching alerts:", err);
+      }
+    }
+
+    fetchAlerts();
   }, []);
 
+  if (!animalId || typeof animalId !== "string") {
+    return <p className="text-white p-6">Loading...</p>;
+  }
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col">
+    <div className="min-h-screen bg-gray-900 text-white">
       <header className="bg-indigo-800 text-white p-4 shadow-lg">
-        <h1 className="text-3xl font-bold text-center">
-          Real-Time Temperature for Animal {animalId}
+        <h1 className="text-3xl font-bold text-center capitalize">
+          Temperature Profile: {animalId}
         </h1>
       </header>
-      <main className="p-6 flex-grow">
-        {/* Pass the data as an array of temperatures */}
-        <TemperatureChart data={temps} />
+
+      <main className="p-6">
+        {temps.length > 0 ? (
+          <>
+            <TemperatureChart data={{ [animalId]: temps }} />
+            <p className="mt-4 text-lg">
+              Latest Temperature: {temps[temps.length - 1]}°C
+            </p>
+          </>
+        ) : (
+          <p className="text-gray-400 mt-6">No temperature data available.</p>
+        )}
 
         {alerts.length > 0 && (
-          <div className="bg-red-500 text-white p-3 mt-4 rounded-lg">
-            <h2 className="text-xl mb-2">Alerts:</h2>
+          <div className="bg-red-600 text-white p-3 mt-6 rounded">
+            <h2 className="text-lg font-semibold">Alerts</h2>
             <ul className="list-disc list-inside">
-              {alerts.map((a, i) => (
-                <li key={i}>
-                  {a.animal}: {a.temperature}°C
-                </li>
-              ))}
+              {alerts
+                .filter((a) => a.animal.toLowerCase() === animalId.toLowerCase())
+                .map((a, i) => (
+                  <li key={i}>
+                    {a.animal}: {a.temperature}°C
+                  </li>
+                ))}
             </ul>
           </div>
         )}
       </main>
-      <footer className="bg-gray-800 text-center text-sm p-4">
-        &copy; 2025 Animal Temperatures. All rights reserved.
-      </footer>
     </div>
   );
 }

@@ -12,12 +12,17 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("No animals found in the database."))
             return
 
+        # Start generating random temperatures every 2 seconds
         while True:
             for animal in animals:
+                # Generate random temperature between 35 and 40°C
                 temperature = round(random.uniform(35, 40), 1)
                 
+                # Create a new TemperatureReading
                 TemperatureReading.objects.create(animal=animal, temperature=temperature)
 
+                # Print the generated value (optional)
                 self.stdout.write(self.style.SUCCESS(f"Generated {temperature}°C for {animal.name}"))
             
+            # Wait for 2 seconds before generating the next set of temperatures
             sleep(2)
