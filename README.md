@@ -58,7 +58,7 @@ Here’s how the app looks in action:
 
 <div align="center">
   <img src="image.png" alt="Temperature Chart View" width="600"/>
-  <p><i>📈 Live Temperature Chart with Multiple Animals</i></p>
+  <p><i>Live Temperature Chart with Multiple Animals</i></p>
 </div>
 
 <br/>
