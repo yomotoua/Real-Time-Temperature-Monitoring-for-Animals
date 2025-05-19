@@ -1,9 +1,9 @@
-# 🐾 Real-Time Temperature Monitoring for Animals  
+# Real-Time Temperature Monitoring for Animals  
 **OS Project — Real-Time Animal Health Monitoring System**
 
 ---
 
-## 🔐 Admin Panel Access
+## Admin Panel Access
 
 To manage animals via the admin interface:
 
@@ -12,9 +12,9 @@ To manage animals via the admin interface:
 
 ---
 
-## 🚀 How to Run the Project
+##  How to Run the Project
 
-### 🧪 Backend Setup (Django)
+###  Backend Setup (Django)
 
 **In the first terminal:**
 
@@ -26,7 +26,7 @@ python manage.py runserver
 
 ---
 
-### 🌐 Frontend Setup (Next.js)
+###  Frontend Setup (Next.js)
 
 **In the second terminal:**
 
@@ -37,15 +37,15 @@ npm run dev
 
 ---
 
-## 🌍 Access the App
+##  Access the App
 
 Open your browser and go to:
 
-👉 [http://localhost:3000](http://localhost:3000)
+ [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 📌 Notes
+##  Notes
 
 - Make sure your backend is running before starting the frontend.
 - Alerts will display automatically when animal temperatures go outside the safe range.
