@@ -20,7 +20,7 @@ To manage animals via the admin interface:
 
 ```bash
 .\venv\Scripts\Activate
-cd django-backend\temperature_backend
+cd django-backend
 python manage.py runserver
 ```
 
