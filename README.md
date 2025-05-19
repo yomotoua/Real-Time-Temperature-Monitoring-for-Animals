@@ -12,7 +12,6 @@ To manage animals via the admin interface:
 
 ---
 
-## How to Run the Project
 
 ### Backend Setup (Django)
 
@@ -20,7 +19,7 @@ To manage animals via the admin interface:
 
 ```bash
 .\venv\Scripts\Activate
-cd django-backend\temperature_backend
+cd django-backend
 python manage.py runserver
 ```
 
@@ -52,3 +51,19 @@ Open your browser and go to:
 - Real-time chart updates occur every 2 seconds.
 
 ---
+
+## 🖼️ Demo Previews
+
+Here’s how the app looks in action:
+
+<div align="center">
+  <img src="image.png" alt="Temperature Chart View" width="600"/>
+  <p><i>📈 Live Temperature Chart with Multiple Animals</i></p>
+</div>
+
+<br/>
+
+<div align="center">
+  <img src="image-1.png" alt="Alert Notification Example" width="600"/>
+  <p><i>Admin profile</i></p>
+</div>
